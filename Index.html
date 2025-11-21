@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Temporal Resonator-2025 | Live</title>
+  <meta charset="utf-8">
+  <style>
+    body { font-family: monospace; background: #000; color: #0f0; text-align: center; padding: 50px; }
+    .metric { font-size: 3em; margin: 20px; }
+    button { font-size: 2em; padding: 20px; background: #0f0; color: #000; border: none; cursor: pointer; }
+    .log { margin-top: 50px; text-align: left; max-width: 800px; margin-left: auto; margin-right: auto; }
+  </style>
+</head>
+<body>
+  <h1>🧬 TEMPORAL RESONATOR-2025</h1>
+  <p>Status: <span id="status">WAITING FOR OBSERVER</span></p>
+  <p>Time shift Δt: <span id="shift" class="metric">--.--- s</span></p>
+  <p>Observer clicks: <span id="clicks" class="metric">0</span></p>
+  
+  <button id="observer-btn">Я ПЕРЕСТАЛ НАБЛЮДАТЬ</button>
+  
+  <div class="log">
+    <h3>Live Log:</h3>
+    <ul id="log"></ul>
+  </div>
+
+  <script>
+    let clicks = 0;
+    const log = document.getElementById('log');
+    const status = document.getElementById('status');
+    const shift = document.getElementById('shift');
+    const clicksDisplay = document.getElementById('clicks');
+    
+    // Генерация временного сдвига (эмуляция)
+    setInterval(() => {
+      const dt = (Math.random() * 0.2 - 0.1).toFixed(3);
+      shift.textContent = dt + ' s';
+      
+      // Меняем цвет на красный при отрицательном сдвиге
+      if (parseFloat(dt) < -0.05) {
+        document.body.style.background = '#300';
+        status.textContent = '⚠️ TIME ANOMALY DETECTED';
+      } else {
+        document.body.style.background = '#000';
+        status.textContent = 'STABLE';
+      }
+    }, 1000);
+
+    // Обработчик кнопки
+    document.getElementById('observer-btn').onclick = () => {
+      clicks++;
+      clicksDisplay.textContent = clicks;
+      
+      const now = new Date().toISOString();
+      const dt = shift.textContent;
+      
+      // Добавляем в лог
+      const li = document.createElement('li');
+      li.textContent = `[${now}] Клик #${clicks} | Δt: ${dt}`;
+      log.prepend(li);
+    };
+  </script>
+</body>
+</html>
